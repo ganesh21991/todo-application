@@ -1,0 +1,4 @@
+# Project exclude paths
+/frontend/.angular/
+node_modules
+.idea/
