@@ -41,9 +41,9 @@ pipeline {
     }
 
     stage('Deploy to k8s') {
-     withKubeConfig([serverUrl: 'https://172.17.105.67:8443']) {
-        bat 'kubectl apply -f deployment.yaml'
-      }
+       script {
+           bat 'kubectl apply -f deployment.yaml'
+        }
     }
   }
 }
