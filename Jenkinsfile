@@ -44,6 +44,7 @@ pipeline {
       steps {
         script {
           bat 'kubectl apply -f deployment.yaml'
+          bat 'minikube service todo-application --url'
         }
       }
     }
