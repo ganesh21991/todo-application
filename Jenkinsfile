@@ -8,7 +8,7 @@ pipeline {
         {
             steps {
                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'githubcred', url: 'https://github.com/ganesh21991/todo-application']]])
-               bat 'mvn clean install -rf :todo-backend'
+               bat 'mvn clean install'
 
             }
         }
