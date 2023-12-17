@@ -20,17 +20,29 @@ pipeline {
               }
             }
         }
-       stage('Push Docker Image')
-        {
-            steps {
-              script {
-               withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-                    bat 'docker login -u ganesh21991 -p %dockerhub%'
-                  }
-                 bat 'docker push ganesh21991/todo-application:1.0'
-              }
-            }
+       // stage('Push Docker Image')
+       //  {
+       //      steps {
+       //        script {
+       //         withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
+       //              bat 'docker login -u ganesh21991 -p %dockerhub%'
+       //            }
+       //           bat 'docker push ganesh21991/todo-application:1.0'
+       //        }
+       //      }
+       //  }
+        stage('Push Docker Image') {
+          environment {
+               registryCredential = 'dockerhub'
+           }
+         steps{
+             script {
+                docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+                dockerImage.push('ganesh21991/todo-application:1.0')
+          }
         }
+      }
+    }
         stage('Deploy to k8s')
                 {
                     steps {
