@@ -1,4 +1,3 @@
-// hi
 pipeline {
     agent any
     tools {
@@ -8,7 +7,7 @@ pipeline {
        stage('Build Maven')
         {
             steps {
-               checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'todo-application', url: 'https://github.com/ganesh21991/todo-application']]])
+               checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'githubcred', url: 'https://github.com/ganesh21991/todo-application']]])
                bat 'mvn clean install'
 
             }
@@ -25,8 +24,8 @@ pipeline {
         {
             steps {
               script {
-               withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
-                    bat 'docker login -u ganesh21991 -p %dockerhubpwd%'
+               withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
+                    bat 'docker login -u ganesh21991 -p %dockerhub%'
                   }
                  bat 'docker push ganesh21991/todo-application:1.0'
               }
@@ -36,7 +35,7 @@ pipeline {
                 {
                     steps {
                       script {
-                      kubernetesDeploy (configs: 'deployment.yaml', kubeconfigId: 'k8sconfigpwd')
+                      kubernetesDeploy (configs: 'deployment.yaml')
                       }
                     }
                 }
