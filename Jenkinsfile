@@ -45,12 +45,10 @@ pipeline {
         script {
           bat 'kubectl apply -f deployment.yaml'
         }
-      }
-       options {
+          options {
               timeout(time: 180, unit: 'SECONDS')  
          }
-      steps {
-        script {
+         script {
           bat 'minikube service todo-application --url'
         }
       }
