@@ -44,7 +44,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>npm.cmd</executable>
+                            <executable>npm.sh</executable>
                             <arguments>
                                 <argument>install</argument>
                             </arguments>
