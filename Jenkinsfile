@@ -1,8 +1,4 @@
 pipeline {
-  environment {
-    dockerimagename = "ganesh21991/todo-application:1.0"
-    dockerImage = ""
-  }
   agent any
   tools {
     maven 'Default'
@@ -27,25 +23,6 @@ pipeline {
               }
             }
         }
-//     stage('Build image') {
-//       steps {
-//         script {
-//           dockerImage = docker.build dockerimagename
-//         }
-//       }
-//     }
-    /* stage('Pushing Image') {
-      environment {
-        registryCredential = 'dockerhub'
-      }
-      steps {
-        script {
-          docker.withRegistry('', registryCredential) {
-            dockerImage.push("1.0")
-          }
-        }
-      }
-    } */
      stage('Push Docker Image')
         {
             steps {
@@ -67,18 +44,7 @@ pipeline {
           }
         }
       }
-    } */
-     /* stage('Deploy to k8s openshift') {
-          steps {
-            script {
-              bat 'kubectl apply -f deployment.yaml'
-              bat 'kubectl rollout restart deployment/todo-application-deployment'
-              timeout(time: 180, unit: 'SECONDS'){
-                   bat 'oc get route/todo-application'
-              }
-            }
-          }
-        } */
+     } */
         stage('Deploy to k8s openshift') {
           steps {
                    script {
