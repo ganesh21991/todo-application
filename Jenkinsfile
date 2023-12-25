@@ -33,7 +33,7 @@ pipeline {
       }
       steps {
         script {
-          docker.withRegistry('', registryCredential) {
+          docker.withRegistry('ganesh21991/todo-application', registryCredential) {
             dockerImage.push("1.0")
           }
         }
