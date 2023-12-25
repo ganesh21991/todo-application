@@ -40,17 +40,17 @@ pipeline {
       }
     }
 
-//     stage('Deploy to k8s minikube') {
-//       steps {
-//         script {
-//           bat 'kubectl apply -f deployment.yaml'
-//           timeout(time: 180, unit: 'SECONDS'){
-//                bat 'minikube service todo-application --url'
-//           }
-//         }
-//       }
-//     }
-     stage('Deploy to k8s openshift') {
+    /* stage('Deploy to k8s minikube') {
+      steps {
+        script {
+          bat 'kubectl apply -f deployment.yaml'
+          timeout(time: 180, unit: 'SECONDS'){
+               bat 'minikube service todo-application --url'
+          }
+        }
+      }
+    } */
+     /* stage('Deploy to k8s openshift') {
           steps {
             script {
               bat 'kubectl apply -f deployment.yaml'
@@ -60,6 +60,21 @@ pipeline {
               }
             }
           }
-        }
+        } */
+        stage('Deploy to k8s openshift') {
+          steps {
+                   script {
+                        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'OpenShiftCred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])
+        					{
+        						bat 'oc login -u $USERNAME -p $PASSWORD'
+        					}
+                        bat 'kubectl apply -f deployment.yaml'
+        				bat 'kubectl rollout restart deployment/todo-application-deployment'
+        				timeout(time: 180, unit: 'SECONDS'){
+                               bat 'oc get route/todo-application'
+        					}
+                        }
+                }
+            }
   }
 }
