@@ -54,7 +54,7 @@ pipeline {
                   {
                     bat 'docker login -u %USERNAME% -p %PASSWORD%'
                   }
-                 bat 'docker push ganesh21991/spring-boot-oracle:1.0'
+                 bat 'docker push ganesh21991/todo-application:1.0'
               }
             }
         }
