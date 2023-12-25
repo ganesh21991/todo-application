@@ -15,7 +15,8 @@ public class HelloController {
 
     @GetMapping(value = "/api/message")
     public Map<String, String> index() {
-        return Collections.singletonMap("message", "Greetings from Spring Boot and Angular!");
+       // return Collections.singletonMap("message", "Greetings from Spring Boot and Angular!");
+         return Collections.singletonMap("message", "Welcome to Deployment");
     }
 
 }
