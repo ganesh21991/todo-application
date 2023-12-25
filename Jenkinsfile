@@ -51,6 +51,7 @@ pipeline {
             steps {
               script {
                   withCredentials([usernamePassword(credentialsId:'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                  {
                     bat 'docker login -u %USERNAME% -p %PASSWORD%'
                   }
                  bat 'docker push ganesh21991/spring-boot-oracle:1.0'
