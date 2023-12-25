@@ -19,15 +19,22 @@ pipeline {
 
       }
     }
-
-    stage('Build image') {
-      steps {
-        script {
-          dockerImage = docker.build dockerimagename
+     stage('Build Docker Image')
+        {
+            steps {
+              script {
+                bat 'docker build -t ganesh21991/todo-application:1.0 .'
+              }
+            }
         }
-      }
-    }
-    stage('Pushing Image') {
+//     stage('Build image') {
+//       steps {
+//         script {
+//           dockerImage = docker.build dockerimagename
+//         }
+//       }
+//     }
+    /* stage('Pushing Image') {
       environment {
         registryCredential = 'dockerhub'
       }
@@ -38,8 +45,18 @@ pipeline {
           }
         }
       }
-    }
-
+    } */
+     stage('Push Docker Image')
+        {
+            steps {
+              script {
+                  withCredentials([usernamePassword(credentialsId:'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                    bat 'docker login -u %USERNAME% -p %PASSWORD%'
+                  }
+                 bat 'docker push ganesh21991/spring-boot-oracle:1.0'
+              }
+            }
+        }
     /* stage('Deploy to k8s minikube') {
       steps {
         script {
