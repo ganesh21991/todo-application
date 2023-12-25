@@ -66,7 +66,7 @@ pipeline {
                    script {
                         withCredentials([usernamePassword(credentialsId:'OpenShiftLoginCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
         					{
-        						bat 'oc login -u=$USERNAME -p=$PASSWORD'
+        						bat 'oc login -u=%USERNAME% -p=%PASSWORD%'
         					}
                         bat 'kubectl apply -f deployment.yaml'
         				bat 'kubectl rollout restart deployment/todo-application-deployment'
