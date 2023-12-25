@@ -15,7 +15,7 @@ spec:
       containers:
         - name: todo-application
           image: ganesh21991/todo-application:1.0 # Image that will be used to containers in the cluster
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080 # The port that the container is running on in the cluster
 
@@ -33,3 +33,14 @@ spec:
       targetPort: 8080
   type: LoadBalancer
 
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: todo-application
+spec:
+  to:
+    kind: Service
+    name: todo-application
+  port:
+    targetPort: 8080

@@ -40,15 +40,25 @@ pipeline {
       }
     }
 
-    stage('Deploy to k8s') {
-      steps {
-        script {
-          bat 'kubectl apply -f deployment.yaml'
-          timeout(time: 180, unit: 'SECONDS'){
-               bat 'minikube service todo-application --url'
+//     stage('Deploy to k8s minikube') {
+//       steps {
+//         script {
+//           bat 'kubectl apply -f deployment.yaml'
+//           timeout(time: 180, unit: 'SECONDS'){
+//                bat 'minikube service todo-application --url'
+//           }
+//         }
+//       }
+//     }
+     stage('Deploy to k8s openshift') {
+          steps {
+            script {
+              bat 'kubectl apply -f deployment.yaml'
+              timeout(time: 180, unit: 'SECONDS'){
+                   bat 'oc get route/todo-application'
+              }
+            }
           }
         }
-      }
-    }
   }
 }
