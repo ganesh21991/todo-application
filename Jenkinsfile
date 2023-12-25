@@ -64,7 +64,7 @@ pipeline {
         stage('Deploy to k8s openshift') {
           steps {
                    script {
-                        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'OpenShiftLoginCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])
+                        withCredentials([usernamePassword(credentialsId:'OpenShiftLoginCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
         					{
         						bat 'oc login -u=$USERNAME -p=$PASSWORD'
         					}
