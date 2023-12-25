@@ -54,7 +54,6 @@ pipeline {
           steps {
             script {
               bat 'kubectl apply -f deployment.yaml'
-              bat 'kubectl rollout restart deployment/todo-application-deployment'
               timeout(time: 180, unit: 'SECONDS'){
                    bat 'oc get route/todo-application'
               }
